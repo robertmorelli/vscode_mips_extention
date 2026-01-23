@@ -1,0 +1,125 @@
+{
+  "name": "mips-assembly",
+  "displayName": "MIPS Assembly",
+  "description": "MIPS assembly language support with LSP-based diagnostics, hover, go-to-definition, and integrated MARS simulator. Requires Java 17+.",
+  "version": "0.1.0",
+  "publisher": "mips-tools",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robertmorelli/mips-lsp"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "keywords": [
+    "mips",
+    "assembly",
+    "asm",
+    "mars",
+    "simulator",
+    "computer architecture"
+  ],
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Education"
+  ],
+  "activationEvents": [
+    "onLanguage:mips"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "mips",
+        "aliases": ["MIPS", "MIPS Assembly", "mips"],
+        "extensions": [".s", ".asm", ".mips"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mips",
+        "scopeName": "source.mips",
+        "path": "./syntaxes/mips.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "MIPS Assembly",
+      "properties": {
+        "mips.javaPath": {
+          "type": "string",
+          "default": "java",
+          "description": "Path to Java executable (requires Java 17+)"
+        },
+        "mips.serverPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the MIPS LSP server directory (containing out/classes and libs)"
+        },
+        "mips.selfModifyingCode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable self-modifying code (allows program to write and branch to text or data segment)"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "mips.assemble",
+        "title": "MIPS: Assemble Current File",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "mips.run",
+        "title": "MIPS: Run",
+        "icon": "$(play)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "mips.run",
+        "key": "f5",
+        "when": "editorLangId == mips"
+      },
+      {
+        "command": "mips.assemble",
+        "key": "ctrl+shift+b",
+        "mac": "cmd+shift+b",
+        "when": "editorLangId == mips"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "mips.run",
+          "when": "editorLangId == mips",
+          "group": "navigation@1"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "mips.assemble",
+          "when": "editorLangId == mips",
+          "group": "navigation@1"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.22.0"
+  }
+}

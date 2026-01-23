@@ -1,0 +1,127 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "MIPS Assembly",
+  "scopeName": "source.mips",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#labels" },
+    { "include": "#directives" },
+    { "include": "#registers" },
+    { "include": "#instructions" },
+    { "include": "#numbers" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.mips",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.mips",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.mips",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.mips",
+          "match": "'(\\\\.|[^'\\\\])'"
+        }
+      ]
+    },
+    "labels": {
+      "patterns": [
+        {
+          "name": "entity.name.function.label.mips",
+          "match": "^\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*:"
+        }
+      ]
+    },
+    "directives": {
+      "patterns": [
+        {
+          "name": "keyword.control.directive.mips",
+          "match": "\\.(text|data|ktext|kdata|globl|extern|align|space|ascii|asciiz|byte|half|word|float|double|include|eqv|macro|end_macro|set)\\b"
+        }
+      ]
+    },
+    "registers": {
+      "patterns": [
+        {
+          "name": "variable.language.register.mips",
+          "match": "\\$(zero|at|v[0-1]|a[0-3]|t[0-9]|s[0-7]|k[0-1]|gp|sp|fp|ra|[0-9]|[12][0-9]|3[01])\\b"
+        },
+        {
+          "name": "variable.language.register.fp.mips",
+          "match": "\\$f([0-9]|[12][0-9]|3[01])\\b"
+        }
+      ]
+    },
+    "instructions": {
+      "patterns": [
+        {
+          "name": "keyword.mnemonic.arithmetic.mips",
+          "match": "\\b(add|addu|addi|addiu|sub|subu|mult|multu|div|divu|mul|rem|remu|neg|negu|abs)\\b"
+        },
+        {
+          "name": "keyword.mnemonic.logical.mips",
+          "match": "\\b(and|andi|or|ori|xor|xori|nor|not|sll|sllv|srl|srlv|sra|srav|rol|ror)\\b"
+        },
+        {
+          "name": "keyword.mnemonic.comparison.mips",
+          "match": "\\b(slt|sltu|slti|sltiu|seq|sne|sgt|sgtu|sge|sgeu|sle|sleu)\\b"
+        },
+        {
+          "name": "keyword.mnemonic.branch.mips",
+          "match": "\\b(beq|bne|blt|bgt|ble|bge|bltu|bgtu|bleu|bgeu|beqz|bnez|bltz|bgtz|blez|bgez|bgezal|bltzal)\\b"
+        },
+        {
+          "name": "keyword.mnemonic.jump.mips",
+          "match": "\\b(j|jal|jr|jalr)\\b"
+        },
+        {
+          "name": "keyword.mnemonic.memory.mips",
+          "match": "\\b(lw|lh|lhu|lb|lbu|sw|sh|sb|la|li|lui|move|mfhi|mflo|mthi|mtlo)\\b"
+        },
+        {
+          "name": "keyword.mnemonic.system.mips",
+          "match": "\\b(syscall|break|nop)\\b"
+        },
+        {
+          "name": "keyword.mnemonic.float.mips",
+          "match": "\\b(lwc1|swc1|mtc1|mfc1|cvt\\.[sdw]\\.[sdw]|add\\.[sd]|sub\\.[sd]|mul\\.[sd]|div\\.[sd]|mov\\.[sd]|neg\\.[sd]|abs\\.[sd]|sqrt\\.[sd]|c\\.(eq|lt|le)\\.[sd]|bc1t|bc1f)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.mips",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.binary.mips",
+          "match": "\\b0[bB][01]+\\b"
+        },
+        {
+          "name": "constant.numeric.decimal.mips",
+          "match": "\\b-?[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.float.mips",
+          "match": "\\b-?[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?\\b"
+        }
+      ]
+    }
+  }
+}

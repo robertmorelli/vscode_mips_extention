@@ -30,25 +30,11 @@ export function activate(context: ExtensionContext) {
     javaPath = config.get<string>('javaPath', 'java');
     serverPath = config.get<string>('serverPath', '');
 
-    // Try to find server path - prefer bundled server in extension
+    // Use bundled server in extension directory only (no external paths)
     if (!serverPath) {
-        // First check for bundled server in extension directory
         const bundledServer = path.join(extensionPath, 'server');
         if (fs.existsSync(path.join(bundledServer, 'classes'))) {
             serverPath = bundledServer;
-        } else {
-            // Fall back to development paths
-            const candidates = [
-                path.dirname(extensionPath),
-                '/Users/robertmorelli/Documents/personal-repos/mips-lsp',
-            ];
-
-            for (const candidate of candidates) {
-                if (fs.existsSync(path.join(candidate, 'out', 'classes'))) {
-                    serverPath = candidate;
-                    break;
-                }
-            }
         }
     }
 
@@ -167,6 +153,7 @@ async function runProgram() {
     // Get configuration
     const config = workspace.getConfiguration('mips');
     const selfModifyingCode = config.get<boolean>('selfModifyingCode', false);
+    const cleanOutput = config.get<boolean>('cleanOutput', true);
 
     // Find MARS JAR
     const marsPath = findMarsJar(filePath);
@@ -188,48 +175,35 @@ async function runProgram() {
     const smcFlag = selfModifyingCode ? 'smc' : '';
     const runCmd = `"${javaPath}" -jar "${marsPath}" nc ${smcFlag} "${filePath}"`.replace(/\s+/g, ' ');
 
-    // Clear screen and run - gives clean output without showing the command
-    const isWindows = process.platform === 'win32';
-    const clearCmd = isWindows ? 'cls' : 'clear';
-
     mipsTerminal.show(true);
-    mipsTerminal.sendText(`${clearCmd} && ${runCmd}`);
+
+    if (cleanOutput) {
+        // Clear screen before running - hides the command
+        const isWindows = process.platform === 'win32';
+        const clearCmd = isWindows ? 'cls' : 'clear';
+        mipsTerminal.sendText(`${clearCmd} && ${runCmd}`);
+    } else {
+        // Run without clearing - command stays visible
+        mipsTerminal.sendText(runCmd);
+    }
 
     outputChannel.appendLine(`Running: ${filePath}`);
 }
 
 /**
  * Find the MARS JAR file.
- * Searches in order: extension bundle, server path, file directory.
+ * Only searches within the extension bundle (no external paths).
  */
-function findMarsJar(currentFile: string): string | null {
-    const fileDir = path.dirname(currentFile);
-
-    // Build search locations in priority order
+function findMarsJar(_currentFile: string): string | null {
+    // Only check bundled with extension (no external paths)
     const marsLocations: string[] = [];
 
-    // 1. First check bundled with extension
     if (extensionPath) {
         marsLocations.push(
             path.join(extensionPath, 'Mars.jar'),
             path.join(extensionPath, 'bin', 'Mars.jar')
         );
     }
-
-    // 2. Then check server path (for development)
-    if (serverPath) {
-        marsLocations.push(
-            path.join(serverPath, 'Mars.jar'),
-            path.join(serverPath, 'third_party', 'mars_upstream', 'Mars.jar'),
-            path.join(serverPath, 'third_party', 'mars_upstream', 'Mars4_5.jar')
-        );
-    }
-
-    // 3. Finally check near the source file
-    marsLocations.push(
-        path.join(fileDir, 'Mars.jar'),
-        path.join(path.dirname(fileDir), 'Mars.jar')
-    );
 
     for (const loc of marsLocations) {
         if (fs.existsSync(loc)) {

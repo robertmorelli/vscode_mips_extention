@@ -12,8 +12,6 @@ Language support for MIPS assembly with LSP-based diagnostics, hover information
 ## Requirements
 
 - **Java 17 or later** - Required to run the MIPS simulator and LSP server
-  - [Download Java](https://adoptium.net/)
-  - Verify installation: `java -version`
 
 ## Usage
 
@@ -31,7 +29,7 @@ Language support for MIPS assembly with LSP-based diagnostics, hover information
 
 ## Credits
 
-This extension uses [MARS](http://courses.missouristate.edu/KenVollmar/mars/) (MIPS Assembler and Runtime Simulator) by Pete Sanderson and Kenneth Vollmar, released under the MIT License.
+This extension uses [MARS](https://github.com/dpetersanderson/MARS) (MIPS Assembler and Runtime Simulator) by Pete Sanderson and Kenneth Vollmar, released under the MIT License.
 
 ## License
 

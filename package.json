@@ -3,11 +3,11 @@
   "displayName": "MIPS Assembly",
   "description": "MIPS assembly language support with LSP-based diagnostics, hover, go-to-definition, and integrated MARS simulator. Requires Java 17+.",
   "version": "0.1.0",
-  "publisher": "mips-tools",
+  "publisher": "robertmorelli",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/robertmorelli/mips-lsp"
+    "url": "https://github.com/robertmorelli/vscode_mips_extention"
   },
   "engines": {
     "vscode": "^1.80.0"

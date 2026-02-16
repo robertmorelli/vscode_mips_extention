@@ -2,7 +2,7 @@
   "name": "mips-assembly",
   "displayName": "MIPS Assembly",
   "description": "MIPS assembly language support with LSP-based diagnostics, hover, go-to-definition, and integrated MIPS simulator.",
-  "version": "0.6.3",
+  "version": "0.6.5",
   "publisher": "robertmorelli",
   "license": "MIT",
   "repository": {

@@ -6,3 +6,6 @@ tsconfig.json
 **/*.ts
 **/*.map
 node_modules/**
+
+# Include WASM runtime in package
+!wasm/**

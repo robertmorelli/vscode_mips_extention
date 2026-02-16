@@ -3,13 +3,27 @@
   "name": "MIPS Assembly",
   "scopeName": "source.mips",
   "patterns": [
-    { "include": "#comments" },
-    { "include": "#strings" },
-    { "include": "#labels" },
-    { "include": "#directives" },
-    { "include": "#registers" },
-    { "include": "#instructions" },
-    { "include": "#numbers" }
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#labels"
+    },
+    {
+      "include": "#directives"
+    },
+    {
+      "include": "#registers"
+    },
+    {
+      "include": "#instructions"
+    },
+    {
+      "include": "#numbers"
+    }
   ],
   "repository": {
     "comments": {
@@ -71,35 +85,35 @@
       "patterns": [
         {
           "name": "keyword.mnemonic.arithmetic.mips",
-          "match": "\\b(add|addu|addi|addiu|sub|subu|mult|multu|div|divu|mul|rem|remu|neg|negu|abs)\\b"
+          "match": "\\b(abs|add|addi|addiu|addu|div|divu|mul|mulo|mulou|mult|multu|mulu|neg|negu|rem|remu|sub|subi|subiu|subu)\\b"
         },
         {
           "name": "keyword.mnemonic.logical.mips",
-          "match": "\\b(and|andi|or|ori|xor|xori|nor|not|sll|sllv|srl|srlv|sra|srav|rol|ror)\\b"
+          "match": "\\b(and|andi|nor|not|or|ori|rol|ror|sll|sllv|sra|srav|srl|srlv|xor|xori)\\b"
         },
         {
           "name": "keyword.mnemonic.comparison.mips",
-          "match": "\\b(slt|sltu|slti|sltiu|seq|sne|sgt|sgtu|sge|sgeu|sle|sleu)\\b"
+          "match": "\\b(seq|sge|sgeu|sgt|sgtu|sle|sleu|slt|slti|sltiu|sltu|sne)\\b"
         },
         {
           "name": "keyword.mnemonic.branch.mips",
-          "match": "\\b(beq|bne|blt|bgt|ble|bge|bltu|bgtu|bleu|bgeu|beqz|bnez|bltz|bgtz|blez|bgez|bgezal|bltzal)\\b"
+          "match": "\\b(b|bal|beq|beqz|bge|bgeu|bgez|bgezal|bgt|bgtu|bgtz|ble|bleu|blez|blt|bltu|bltz|bltzal|bne|bnez)\\b"
         },
         {
           "name": "keyword.mnemonic.jump.mips",
-          "match": "\\b(j|jal|jr|jalr)\\b"
+          "match": "\\b(j|jal|jalr|jr)\\b"
         },
         {
           "name": "keyword.mnemonic.memory.mips",
-          "match": "\\b(lw|lh|lhu|lb|lbu|sw|sh|sb|la|li|lui|move|mfhi|mflo|mthi|mtlo)\\b"
+          "match": "\\b(la|lb|lbu|ld|lh|lhu|li|ll|lui|lw|lwl|lwr|mfhi|mflo|move|mthi|mtlo|sb|sc|sd|sh|sw|swl|swr|ulh|ulhu|ulw|ush|usw)\\b"
         },
         {
           "name": "keyword.mnemonic.system.mips",
-          "match": "\\b(syscall|break|nop)\\b"
+          "match": "\\b(break|nop|syscall)\\b"
         },
         {
           "name": "keyword.mnemonic.float.mips",
-          "match": "\\b(lwc1|swc1|mtc1|mfc1|cvt\\.[sdw]\\.[sdw]|add\\.[sd]|sub\\.[sd]|mul\\.[sd]|div\\.[sd]|mov\\.[sd]|neg\\.[sd]|abs\\.[sd]|sqrt\\.[sd]|c\\.(eq|lt|le)\\.[sd]|bc1t|bc1f)\\b"
+          "match": "\\b(abs\\.d|abs\\.s|add\\.d|add\\.s|bc1f|bc1t|c\\.eq\\.d|c\\.eq\\.s|c\\.le\\.d|c\\.le\\.s|c\\.lt\\.d|c\\.lt\\.s|cvt\\.d\\.s|cvt\\.d\\.w|cvt\\.s\\.d|cvt\\.s\\.w|cvt\\.w\\.d|cvt\\.w\\.s|div\\.d|div\\.s|l\\.d|l\\.s|ldc1|lwc1|mfc1|mfc1\\.d|mov\\.d|mov\\.s|mtc1|mtc1\\.d|mul\\.d|mul\\.s|neg\\.d|neg\\.s|s\\.d|s\\.s|sdc1|sub\\.d|sub\\.s|swc1)\\b"
         }
       ]
     },

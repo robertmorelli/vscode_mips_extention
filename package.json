@@ -1,8 +1,8 @@
 {
   "name": "mips-assembly",
   "displayName": "MIPS Assembly",
-  "description": "MIPS assembly language support with LSP-based diagnostics, hover, go-to-definition, and integrated MARS simulator. Requires Java 17+.",
-  "version": "0.3.0",
+  "description": "MIPS assembly language support with LSP-based diagnostics, hover, go-to-definition, and integrated MIPS simulator.",
+  "version": "0.6.3",
   "publisher": "robertmorelli",
   "license": "MIT",
   "repository": {
@@ -16,7 +16,6 @@
     "mips",
     "assembly",
     "asm",
-    "mars",
     "simulator",
     "computer architecture"
   ],
@@ -28,7 +27,7 @@
   "activationEvents": [
     "onLanguage:mips"
   ],
-  "main": "./out/extension.js",
+  "browser": "./out/extension.js",
   "contributes": {
     "languages": [
       {
@@ -56,25 +55,10 @@
     "configuration": {
       "title": "MIPS Assembly",
       "properties": {
-        "mips.javaPath": {
-          "type": "string",
-          "default": "java",
-          "description": "Path to Java executable (requires Java 17+)"
-        },
-        "mips.serverPath": {
-          "type": "string",
-          "default": "",
-          "description": "Path to the MIPS LSP server directory (containing out/classes and libs)"
-        },
         "mips.selfModifyingCode": {
           "type": "boolean",
           "default": false,
           "description": "Enable self-modifying code (allows program to write and branch to text or data segment)"
-        },
-        "mips.cleanOutput": {
-          "type": "boolean",
-          "default": true,
-          "description": "Clear terminal before running (hides the run command)"
         }
       }
     },
@@ -121,20 +105,22 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
-    "compile": "npm run esbuild-base -- --sourcemap",
+    "vscode:prepublish": "npm run generate-grammar && npm run esbuild-base -- --minify",
+    "generate-grammar": "node scripts/generateGrammar.mjs",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=browser",
+    "compile": "npm run generate-grammar && npm run esbuild-base -- --sourcemap",
     "watch": "npm run esbuild-base -- --sourcemap --watch",
+    "build:server": "esbuild ./src/server/server.ts --bundle --outfile=out/server.js --format=cjs --platform=node --external:vscode",
     "package": "vsce package"
   },
-  "dependencies": {
-    "vscode-languageclient": "^9.0.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/vscode": "^1.80.0",
     "@vscode/vsce": "^2.22.0",
     "esbuild": "^0.27.2",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.11"
   }
 }
